@@ -1,0 +1,19 @@
+name: Update README
+on:
+  push:
+    branches: [ main ]
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Generate README
+        run: |
+          node generate-readme.js
+      - name: Commit changes
+        run: |
+          git config --global user.name "README Bot"
+          git config --global user.email "readmebot@example.com"
+          git add README.md
+          git commit -m "Auto-update README" || echo "No changes to commit"
+          git push
